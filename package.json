@@ -1,0 +1,28 @@
+{
+  "name": "hello-ai",
+  "version": "1.0.0",
+  "description": "A simple app that lets you talk with gpt-3.5 directly on the command line prompt by prompt. This is the equivalent of a hello-world but for AI.",
+  "main": "main.ts",
+  "scripts": {
+    "start": "npx ts-node main.ts",
+    "debug": "npx nodemon main.ts"
+  },
+  "keywords": [
+    "openai",
+    "typescript",
+    "gpt",
+    "gpt3",
+    "ai"
+  ],
+  "author": "Miguel Santos",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "openai": "^3.2.1",
+    "prompt-sync": "^4.2.0",
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "@types/prompt-sync": "^4.2.0"
+  }
+}
