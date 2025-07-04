@@ -1,5 +1,5 @@
 # hello-ai
-A simple app written in typescript that lets you talk with gpt-3.5 directly on the command line prompt by prompt. 
+A simple app written in typescript that lets you talk with gpt-4o directly on the command line prompt by prompt. 
 
 This is the equivalent of a hello-world but for AI.
 

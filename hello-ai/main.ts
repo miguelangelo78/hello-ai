@@ -1,28 +1,29 @@
-import { ChatCompletionRequestMessage, Configuration, OpenAIApi } from 'openai';
+import OpenAI from 'openai';
+import { ChatCompletionMessageParam } from 'openai/resources/chat';
 import prompt from 'prompt-sync';
 import { config } from 'dotenv';
 config();
 
-const openai = new OpenAIApi(new Configuration({ apiKey: process.env.OPENAI_API_KEY }));
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const model = 'gpt-4o';
 
-let fullContext: ChatCompletionRequestMessage[] = [];
+let fullContext: ChatCompletionMessageParam[] = [];
 
-function setContext(context: ChatCompletionRequestMessage[]) {
+function setContext(context: ChatCompletionMessageParam[]) {
     fullContext = context;
 }
 
-function addContext(context: ChatCompletionRequestMessage) {
+function addContext(context: ChatCompletionMessageParam) {
     fullContext.push(context);
 }
 
 async function chat(prompt: string) {
-    const userMessage: ChatCompletionRequestMessage = { role: 'user', content: prompt };
+    const userMessage: ChatCompletionMessageParam = { role: 'user', content: prompt };
 
     // Add user message to context
     addContext(userMessage);
 
-    const response = await openai.createChatCompletion({
+    const response = await openai.chat.completions.create({
         model,
         messages: fullContext,
         temperature: 0.1, // From docs:  What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.  We generally recommend altering this or `top_p` but not both.
@@ -31,9 +32,9 @@ async function chat(prompt: string) {
     });
 
     // Add AI response to context
-    const aiResponse: ChatCompletionRequestMessage = {
+    const aiResponse: ChatCompletionMessageParam = {
         role: 'assistant',
-        content: response.data.choices[0].message?.content || ''
+        content: response.choices[0].message.content
     };
     addContext(aiResponse);
 
